@@ -1,6 +1,5 @@
-use std::env;
-
 use clap::{Parser, Subcommand, Args};
+mod api;
 
 #[derive(Parser)]
 #[command(author, version)]
@@ -43,7 +42,7 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::Config(api_key)) => {println!("Hey! this is config")},
+        Some(Commands::Config(api_key)) => {api::config::set_api_key(&api_key.api_key)},
         Some(Commands::Generate(_)) => {println!("Hey! I generate message")},
         None => {},
     }
