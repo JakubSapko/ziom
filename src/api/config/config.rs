@@ -10,9 +10,8 @@ struct ZiomConfig {
 pub fn set_api_key(api_key: &Option<std::string::String>) {
     match api_key {
         Some(value) => {
-            let key = "ZIOM-OPEN-API";
             let ziom_cfg = ZiomConfig {
-                api_key: key.to_string(),
+                api_key: value.to_string(),
             };
             let store = store("ziom", None, ziom_cfg);
             match store {
