@@ -28,13 +28,18 @@ struct Generate {
     #[arg(short = 'c', long = "autocommit")]
     auto_commit: bool,
 }
-
-fn main() {
+#[tokio::main]
+async fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
         Some(Commands::Config(api_key)) => {api::config::config::handle_config(&api_key.api_key)},
-        Some(Commands::Generate(_)) => {api::caller::caller::read_api_key()},
-        None => {},
+        Some(Commands::Generate(_)) => {let msg = api::caller::caller::generate_commit_message().await;
+            match msg {
+                Ok(value) => println!("Msg: {}", value),
+                Err(e) => println!("Ups {}", e)
+            }
+        },
+        None => {api::git_handler::git_handler::get_staged_changes()},
     }
 }
