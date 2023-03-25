@@ -36,7 +36,8 @@ async fn generate_commit_message(api_key: String, readme: &Option<String>) -> Re
         .await?
         .text()
         .await?;
-    Ok(body)
+    println!("{}", r#body);
+    Ok(extract_commit_message(r#body))
 }
 
 fn build_prompt_without_readme() -> String {
@@ -53,9 +54,17 @@ fn build_prompt_with_readme(readme: &String) -> String {
 }
 
 fn read_readme_file(readme: &String) -> Result<String, std::io::Error> {
-    let mut file = File::open("example.txt")?;
+    let mut file = File::open(readme)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents);
 
     Ok(contents)
+}
+
+fn extract_commit_message(input: String) -> String {
+    let choices_start = input.find("\"choices\":").unwrap();
+    let index_start = input.find("\"index\":").unwrap();
+    let text = &input[choices_start..index_start];
+    println!("{}", text);
+    return text.to_owned();
 }
