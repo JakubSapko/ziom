@@ -49,7 +49,7 @@ fn build_prompt_without_readme() -> String {
 fn build_prompt_with_readme(readme: &String) -> String {
     let git_diff = git_handler::git_handler::get_staged_changes().replace("\"", "").replace("\n", "").replace("\\", r"\\").replace("/", r"\/");
     let readme_content = read_readme_file(readme).ok().unwrap();
-    let whole_prompt = format!("\"{}{}{}\"", readme_content, GENERIC_PROMPT, git_diff);
+    let whole_prompt = format!("\"{}{}{}{}\"", PROMPT_WITH_README, readme_content, GENERIC_PROMPT, git_diff);
     return whole_prompt;
 }
 
