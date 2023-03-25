@@ -42,7 +42,7 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::Config(api_key)) => {api::config::config::set_api_key(&api_key.api_key)},
+        Some(Commands::Config(api_key)) => {api::config::config::handle_config(&api_key.api_key)},
         Some(Commands::Generate(_)) => {api::caller::caller::read_api_key()},
         None => {},
     }
