@@ -18,11 +18,11 @@ pub async fn handle_commit() -> Result<String, Box<dyn std::error::Error>>   {
 
 pub async fn generate_commit_message(api_key: String) -> Result<String, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
-    let git_diff = git_handler::git_handler::get_staged_changes();
+
+    let git_diff = git_handler::git_handler::get_staged_changes().replace("\"", "").replace("\n", "").replace("\\", r"\\").replace("/", r"\/");
     let whole_prompt = format!("\"{}{}\"", PROMPT_WITHOUT_README, git_diff);
     let content = format!("{}\"prompt\": {}, {}", PROMPT_BEG, whole_prompt, PROMPT_END);
-    // let content = format!("{}{}", PROMPT_BEG, PROMPT_END);
-    println!("{}", content);
+
     let body = client
         .post("https://api.openai.com/v1/completions")
         .header("Content-Type", "application/json")
