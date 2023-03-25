@@ -31,7 +31,7 @@ fn write_api_key(key: &String) {
     }
 }
 
-fn read_api_key() -> Result<String, confy::ConfyError> {
+pub fn read_api_key() -> Result<String, confy::ConfyError> {
     let ziom_cfg = confy::load::<ZiomConfig>("ziom", None)?;
     return Ok(ziom_cfg.api_key);
 }

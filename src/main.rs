@@ -33,7 +33,7 @@ async fn main() {
     let cli = Cli::parse();
     match &cli.command {
         Some(Commands::Config(api_key)) => {api::config::config::handle_config(&api_key.api_key)},
-        Some(Commands::Generate(_)) => {let msg = api::caller::caller::generate_commit_message().await;
+        Some(Commands::Generate(_)) => {let msg = api::caller::caller::handle_commit().await;
             match msg {
                 Ok(value) => println!("Msg: {}", value),
                 Err(e) => println!("Ups {}", e)
