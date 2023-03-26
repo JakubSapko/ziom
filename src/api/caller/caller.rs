@@ -36,7 +36,6 @@ async fn generate_commit_message(api_key: String, readme: &Option<String>) -> Re
         .await?
         .text()
         .await?;
-    println!("{}", r#body);
     Ok(extract_commit_message(r#body))
 }
 
