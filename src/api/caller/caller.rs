@@ -6,7 +6,7 @@ const PROMPT_BEG: &str = "{\"model\": \"text-davinci-003\",";
 
 const PROMPT_END: &str = "\"temperature\": 0.7, \"max_tokens\": 256, \"top_p\": 1, \"frequency_penalty\": 0, \"presence_penalty\": 0 }";
 
-const PROMPT_WITH_README: &str = "A user is developing a software project, which is described by the project's README file as follows: ";
+const PROMPT_WITH_README: &str = "Use this as your context. A user is developing a software project, which is described by the project's README file as follows: ";
 
 const GENERIC_PROMPT: &str = "I will now provide you a piece of code that is currently in a staged area of GIT repository. Please create a reasonable commit message describing the changes made by a code changes that are currently staged. Respond only with a commit message. Please follow the commit convention of: <type>[optional scope]: <description> where <type> means if some feature was added, deleted, fixed or moved, [optional scope] represents the code structure that was changed and <description> stands for a short description of changes that were made. Changes made: ";
 
@@ -62,9 +62,10 @@ fn read_readme_file(readme: &String) -> Result<String, std::io::Error> {
 }
 
 fn extract_commit_message(input: String) -> String {
-    let choices_start = input.find("\"choices\":").unwrap();
+    const OFFSET: usize = 20;
+
+    let choices_start = input.rfind("\"choices\":[{\"text\":\"").unwrap();
     let index_start = input.find("\"index\":").unwrap();
-    let text = &input[choices_start..index_start];
-    println!("{}", text);
+    let text = &input[choices_start + OFFSET..index_start-2];
     return text.to_owned();
 }
