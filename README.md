@@ -12,6 +12,7 @@ And then put the resulting binary in your `/usr/local/bin` folder.
 
 
 # How to use?
+![Kapture 2023-03-27 at 09 59 42](https://user-images.githubusercontent.com/46461547/227882718-973a7a09-754e-4e8c-aca6-081586099377.gif)
 
 Before using a tool itself you need to set up your OpenAI API key. To do this use:
 
